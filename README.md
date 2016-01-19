@@ -1,51 +1,48 @@
-Taiga contrib github auth
+Taiga contrib slack auth
 =========================
 
-![Kaleidos Project](http://kaleidos.net/static/img/badge.png "Kaleidos Project")
-[![Managed with Taiga.io](https://taiga.io/media/support/attachments/article-22/banner-gh.png)](https://taiga.io "Managed with Taiga.io")
-
-The Taiga plugin for github authentication.
+The Taiga plugin for slack authentication, based on Taiga.io's Github plugin.
 
 Installation
 ------------
 
 ### Taiga Back
 
-In your Taiga back python virtualenv install the pip package `taiga-contrib-github-auth` with:
+In your Taiga back python virtualenv install the pip package `taiga-contrib-slack-auth` with:
 
 ```bash
-  pip install taiga-contrib-github-auth
+  pip install taiga-contrib-slack-auth
 ```
 
 Modify your settings/local.py and include the line:
 
 ```python
-  INSTALLED_APPS += ["taiga_contrib_github_auth"]
+  INSTALLED_APPS += ["taiga_contrib_slack_auth"]
 
-  # Get these from https://github.com/settings/developers
-  GITHUB_API_CLIENT_ID = "YOUR-GITHUB-CLIENT-ID"
-  GITHUB_API_CLIENT_SECRET = "YOUR-GITHUB-CLIENT-SECRET"
+  # Get these from https://slack.com/settings/developers
+  SLACK_API_CLIENT_ID = "YOUR-SLACK-CLIENT-ID"
+  SLACK_API_CLIENT_SECRET = "YOUR-SLACK-CLIENT-SECRET"
 ```
 
 ### Taiga Front
 
-Download in your `dist/plugins/` directory of Taiga front the `taiga-contrib-github-auth` compiled code (you need subversion in your system):
+Download in your `dist/plugins/` directory of Taiga front the `taiga-contrib-slack-auth` compiled code (you need subversion in your system):
 
 ```bash
   cd dist/
   mkdir -p plugins
   cd plugins
-  svn export "https://github.com/taigaio/taiga-contrib-github-auth/tags/$(pip show taiga-contrib-github-auth | awk '/^Version: /{print $2}')/front/dist"  "github-auth"
+  svn export "https://slack.com/sjaakiejj/taiga-contrib-slack-auth/tags/$(pip show taiga-contrib-slack-auth | awk '/^Version: /{print $2}')/front/dist"  "slack-auth"
 ```
 
-Include in your dist/conf.json in the contribPlugins list the value `"/plugins/github-auth/github-auth.json"`:
+Include in your dist/conf.json in the contribPlugins list the value `"/plugins/slack-auth/slack-auth.json"`:
 
 ```json
 ...
-    "gitHubClientId": "YOUR-GITHUB-CLIENT-ID",
+    "slackClientId": "YOUR-slack-CLIENT-ID",
     "contribPlugins": [
         (...)
-        "/plugins/github-auth/github-auth.json"
+        "/plugins/slack-auth/slack-auth.json"
     ]
 ...
 ```

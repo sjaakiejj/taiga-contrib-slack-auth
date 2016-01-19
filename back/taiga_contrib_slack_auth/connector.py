@@ -117,7 +117,7 @@ def login(access_code:str, client_id:str=CLIENT_ID, client_secret:str=CLIENT_SEC
                                                      "with the sysadmins. Maybe they're snoozing in a "
                                                      "secret hideout of the data center.")})
 
-    url = urljoin(URL, "login/oauth/access_token")
+    url = urljoin(URL, "api/oauth.access")
     params={"code": access_code,
             "client_id": client_id,
             "client_secret": client_secret,
