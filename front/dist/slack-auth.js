@@ -52,7 +52,7 @@
       $el.on("click", ".button-auth", function(event) {
         var redirectToUri, url;
         redirectToUri = $location.absUrl();
-        url = AUTH_URL + "?client_id=" + clientId + "&redirect_uri=" + redirectToUri + "&state=slack&scope=user:email";
+        url = AUTH_URL + "?client_id=" + clientId + "&redirect_uri=" + redirectToUri + "&state=slack&scope=channels:history+channels:read+chat:write:user+chat:write:bot+im:write+im:history+im:read+users:read";
         return $window.location.href = url;
       });
       return $scope.$on("$destroy", function() {
@@ -72,7 +72,7 @@
 
   module.run([
     '$templateCache', function($templateCache) {
-      return $templateCache.put('plugin/slack-auth', '<div tg-slack-login-button="tg-slack-login-button"><a href="" title="Enter with your slack account" class="button button-auth"><img src="/plugins/slack-auth/images/slack-logo.png"/><span>Sign in with Slack</span></a></div>');
+      return $templateCache.put('plugin/slack-auth', '<div tg-slack-login-button="tg-slack-login-button"><a href="" title="Enter with your slack account" class="button button-auth"><img height="15px" src="/plugins/slack-auth/images/slack-logo.png"/><span>Sign in with Slack</span></a></div>');
     }
   ]);
 

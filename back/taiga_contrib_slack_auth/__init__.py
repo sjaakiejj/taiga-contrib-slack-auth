@@ -1,6 +1,8 @@
+# This Python file uses the following encoding: utf-8
 # Copyright (C) 2014-2015 Andrey Antukh <niwi@niwi.be>
 # Copyright (C) 2014-2015 Jesús Espino <jespinog@gmail.com>
 # Copyright (C) 2014-2015 David Barragán <bameda@dbarragan.com>
+# Copyright (C) 2014-2015 Jacobus Meulen <jacobus@openbusiness.com.sg>
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -14,6 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-__version__ = (1, 9, 1)
+__version__ = (1, 0, 1)
 
 default_app_config = "taiga_contrib_slack_auth.apps.TaigaContribSlackAuthAppConfig"

@@ -53,7 +53,7 @@ SlackLoginButtonDirective = ($window, $params, $location, $config, $events, $con
 
         $el.on "click", ".button-auth", (event) ->
             redirectToUri = $location.absUrl()
-            url = "#{AUTH_URL}?client_id=#{clientId}&redirect_uri=#{redirectToUri}&state=slack&scope=user:email"
+            url = "#{AUTH_URL}?client_id=#{clientId}&redirect_uri=#{redirectToUri}&state=slack&scope=channels:history+channels:read+chat:write:user+chat:write:bot+im:write+im:history+im:read+users:read"
             $window.location.href = url
 
         $scope.$on "$destroy", ->
