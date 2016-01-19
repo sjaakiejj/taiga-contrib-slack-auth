@@ -1,0 +1,9 @@
+{
+    "name": "Slack Auth",
+    "slug": "slack-auth",
+    "description": "Authenticate with Slack accounts.",
+    "type": "auth",
+    "module": "taigaContrib.slackAuth",
+    "template": "plugin/slack-auth",
+    "js": "/plugins/slack-auth/slack-auth.js"
+}

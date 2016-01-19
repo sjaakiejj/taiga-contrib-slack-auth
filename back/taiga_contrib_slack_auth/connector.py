@@ -26,7 +26,7 @@ from django.utils.translation import ugettext_lazy as _
 from taiga.base.connectors.exceptions import ConnectorBaseException
 
 
-class GitHubApiError(ConnectorBaseException):
+class SlackApiError(ConnectorBaseException):
     pass
 
 
@@ -34,15 +34,15 @@ class GitHubApiError(ConnectorBaseException):
 ## Data
 ######################################################
 
-CLIENT_ID = getattr(settings, "GITHUB_API_CLIENT_ID", None)
-CLIENT_SECRET = getattr(settings, "GITHUB_API_CLIENT_SECRET", None)
+CLIENT_ID = getattr(settings, "SLACK_API_CLIENT_ID", None)
+CLIENT_SECRET = getattr(settings, "SLACK_API_CLIENT_SECRET", None)
 
-URL = getattr(settings, "GITHUB_URL", "https://github.com/")
-API_URL = getattr(settings, "GITHUB_API_URL",  "https://api.github.com/")
+URL = getattr(settings, "SLACK_URL", "https://slack.com/")
+API_URL = getattr(settings, "SLACK_API_URL",  "https://slack.com/")
 API_RESOURCES_URLS = {
     "login": {
-        "authorize": "login/oauth/authorize",
-        "access-token": "login/oauth/access_token"
+        "authorize": "o gauth/authorize",
+        "access-token": "api/oauth.access"
     },
     "user": {
         "profile": "user",
@@ -84,7 +84,7 @@ def _get(url:str, headers:dict) -> dict:
 
     data = response.json()
     if response.status_code != 200:
-        raise GitHubApiError({"status_code": response.status_code,
+        raise SlackApiError({"status_code": response.status_code,
                                   "error": data.get("error", "")})
     return data
 
@@ -97,7 +97,7 @@ def _post(url:str, params:dict, headers:dict) -> dict:
 
     data = response.json()
     if response.status_code != 200 or "error" in data:
-        raise GitHubApiError({"status_code": response.status_code,
+        raise SlackApiError({"status_code": response.status_code,
                                   "error": data.get("error", "")})
     return data
 
@@ -113,7 +113,7 @@ def login(access_code:str, client_id:str=CLIENT_ID, client_secret:str=CLIENT_SEC
     (See https://developer.github.com/v3/oauth/#web-application-flow).
     """
     if not CLIENT_ID or not CLIENT_SECRET:
-        raise GitHubApiError({"error_message": _("Login with github account is disabled. Contact "
+        raise SlackApiError({"error_message": _("Login with slack account is disabled. Contact "
                                                      "with the sysadmins. Maybe they're snoozing in a "
                                                      "secret hideout of the data center.")})
 

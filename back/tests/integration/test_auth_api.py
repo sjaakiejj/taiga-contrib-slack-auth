@@ -23,21 +23,21 @@ from django.core.urlresolvers import reverse
 
 from .. import factories
 
-from taiga_contrib_github_auth import connector as github_connector
+from taiga_contrib_slack_auth import connector as slack_connector
 
 pytestmark = pytest.mark.django_db
 
 
-def test_response_200_in_registration_with_github_account(client, settings):
+def test_response_200_in_registration_with_slack_account(client, settings):
     settings.PUBLIC_REGISTER_ENABLED = False
-    form = {"type": "github",
+    form = {"type": "slack",
             "code": "xxxxxx"}
 
     auth_data_model = apps.get_model("users", "AuthData")
 
-    with patch("taiga_contrib_github_auth.connector.me") as m_me:
+    with patch("taiga_contrib_slack_auth.connector.me") as m_me:
         m_me.return_value = ("mmcfly@bttf.com",
-                             github_connector.User(id=1955,
+                             slack_connector.User(id=1955,
                                                    username="mmcfly",
                                                    full_name="martin seamus mcfly",
                                                    bio="time traveler"))
@@ -49,20 +49,20 @@ def test_response_200_in_registration_with_github_account(client, settings):
         assert response.data["email"] == "mmcfly@bttf.com"
         assert response.data["full_name"] == "martin seamus mcfly"
         assert response.data["bio"] == "time traveler"
-        assert auth_data_model.objects.filter(user__username="mmcfly", key="github", value="1955").count() == 1
+        assert auth_data_model.objects.filter(user__username="mmcfly", key="slack", value="1955").count() == 1
 
 
-def test_response_200_in_registration_with_github_account_and_existed_user_by_email(client, settings):
+def test_response_200_in_registration_with_slack_account_and_existed_user_by_email(client, settings):
     settings.PUBLIC_REGISTER_ENABLED = False
-    form = {"type": "github",
+    form = {"type": "slack",
             "code": "xxxxxx"}
     user = factories.UserFactory()
     user.email = "mmcfly@bttf.com"
     user.save()
 
-    with patch("taiga_contrib_github_auth.connector.me") as m_me:
+    with patch("taiga_contrib_slack_auth.connector.me") as m_me:
         m_me.return_value = ("mmcfly@bttf.com",
-                             github_connector.User(id=1955,
+                             slack_connector.User(id=1955,
                                                    username="mmcfly",
                                                    full_name="martin seamus mcfly",
                                                    bio="time traveler"))
@@ -74,21 +74,21 @@ def test_response_200_in_registration_with_github_account_and_existed_user_by_em
         assert response.data["email"] == user.email
         assert response.data["full_name"] == user.full_name
         assert response.data["bio"] == user.bio
-        assert user.auth_data.filter(key="github", value="1955").count() == 1
+        assert user.auth_data.filter(key="slack", value="1955").count() == 1
 
 
-def test_response_200_in_registration_with_github_account_and_existed_user_by_github_id(client, settings):
+def test_response_200_in_registration_with_slack_account_and_existed_user_by_slack_id(client, settings):
     settings.PUBLIC_REGISTER_ENABLED = False
-    form = {"type": "github",
+    form = {"type": "slack",
             "code": "xxxxxx"}
     user = factories.UserFactory.create()
 
     auth_data_model = apps.get_model("users", "AuthData")
-    auth_data_model.objects.create(user=user, key="github", value="1955", extra={})
+    auth_data_model.objects.create(user=user, key="slack", value="1955", extra={})
 
-    with patch("taiga_contrib_github_auth.connector.me") as m_me:
+    with patch("taiga_contrib_slack_auth.connector.me") as m_me:
         m_me.return_value = ("mmcfly@bttf.com",
-                             github_connector.User(id=1955,
+                             slack_connector.User(id=1955,
                                                    username="mmcfly",
                                                    full_name="martin seamus mcfly",
                                                    bio="time traveler"))
@@ -102,9 +102,9 @@ def test_response_200_in_registration_with_github_account_and_existed_user_by_gi
         assert response.data["bio"] != "time traveler"
 
 
-def test_response_200_in_registration_with_github_account_and_change_github_username(client, settings):
+def test_response_200_in_registration_with_slack_account_and_change_slack_username(client, settings):
     settings.PUBLIC_REGISTER_ENABLED = False
-    form = {"type": "github",
+    form = {"type": "slack",
             "code": "xxxxxx"}
     user = factories.UserFactory()
     user.username = "mmcfly"
@@ -112,9 +112,9 @@ def test_response_200_in_registration_with_github_account_and_change_github_user
 
     auth_data_model = apps.get_model("users", "AuthData")
 
-    with patch("taiga_contrib_github_auth.connector.me") as m_me:
+    with patch("taiga_contrib_slack_auth.connector.me") as m_me:
         m_me.return_value = ("mmcfly@bttf.com",
-                             github_connector.User(id=1955,
+                             slack_connector.User(id=1955,
                                                    username="mmcfly",
                                                    full_name="martin seamus mcfly",
                                                    bio="time traveler"))
@@ -126,20 +126,20 @@ def test_response_200_in_registration_with_github_account_and_change_github_user
         assert response.data["email"] == "mmcfly@bttf.com"
         assert response.data["full_name"] == "martin seamus mcfly"
         assert response.data["bio"] == "time traveler"
-        assert auth_data_model.objects.filter(user__username="mmcfly-1", key="github", value="1955").count() == 1
+        assert auth_data_model.objects.filter(user__username="mmcfly-1", key="slack", value="1955").count() == 1
 
 
-def test_response_200_in_registration_with_github_account_in_a_project(client, settings):
+def test_response_200_in_registration_with_slack_account_in_a_project(client, settings):
     settings.PUBLIC_REGISTER_ENABLED = False
     membership_model = apps.get_model("projects", "Membership")
     membership = factories.MembershipFactory(user=None)
-    form = {"type": "github",
+    form = {"type": "slack",
             "code": "xxxxxx",
             "token": membership.token}
 
-    with patch("taiga_contrib_github_auth.connector.me") as m_me:
+    with patch("taiga_contrib_slack_auth.connector.me") as m_me:
         m_me.return_value = ("mmcfly@bttf.com",
-                             github_connector.User(id=1955,
+                             slack_connector.User(id=1955,
                                                    username="mmcfly",
                                                    full_name="martin seamus mcfly",
                                                    bio="time traveler"))
@@ -149,15 +149,15 @@ def test_response_200_in_registration_with_github_account_in_a_project(client, s
         assert membership_model.objects.get(token=form["token"]).user.username == "mmcfly"
 
 
-def test_response_404_in_registration_with_github_in_a_project_with_invalid_token(client, settings):
+def test_response_404_in_registration_with_slack_in_a_project_with_invalid_token(client, settings):
     settings.PUBLIC_REGISTER_ENABLED = False
-    form = {"type": "github",
+    form = {"type": "slack",
             "code": "xxxxxx",
             "token": "123456"}
 
-    with patch("taiga_contrib_github_auth.connector.me") as m_me:
+    with patch("taiga_contrib_slack_auth.connector.me") as m_me:
         m_me.return_value = ("mmcfly@bttf.com",
-                             github_connector.User(id=1955,
+                             slack_connector.User(id=1955,
                                                    username="mmcfly",
                                                    full_name="martin seamus mcfly",
                                                    bio="time traveler"))

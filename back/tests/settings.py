@@ -25,9 +25,9 @@ MEDIA_ROOT = "/tmp"
 
 EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 INSTALLED_APPS = INSTALLED_APPS + [
-    "taiga_contrib_github_auth",
+    "taiga_contrib_slack_auth",
 ]
-INSTALLED_APPS = set(INSTALLED_APPS) - set(["taiga.hooks.github", "taiga.hooks.gitlab", "taiga.hooks.bitbucket"])
+INSTALLED_APPS = set(INSTALLED_APPS) - set(["taiga.hooks.slack"])
 
 REST_FRAMEWORK["DEFAULT_THROTTLE_RATES"] = {
     "anon": None,

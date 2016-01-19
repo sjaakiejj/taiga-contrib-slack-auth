@@ -1,31 +1,31 @@
 {
-  "name": "taiga-contrib-github-auth",
-  "version": "1.9.1",
-  "description": "Taiga contrib plugin for github authentication",
+  "name": "taiga-contrib-slack-auth",
+  "version": "1.0.1",
+  "description": "Taiga contrib plugin for slack authentication",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist || true",
     "create-dist": "mkdir -p dist",
-    "copy-statics": "cp github-auth.json dist/; cp -r images dist/",
-    "build-js": "{ cat 'coffee/github-auth.coffee'; node_modules/jade/bin/jade.js < 'partials/github-auth.jade'; } | node_modules/coffee-script/bin/coffee --compile --stdio > dist/github-auth.js",
+    "copy-statics": "cp slack-auth.json dist/; cp -r images dist/",
+    "build-js": "{ cat 'coffee/slack-auth.coffee'; node_modules/jade/bin/jade.js < 'partials/slack-auth.jade'; } | node_modules/coffee-script/bin/coffee --compile --stdio > dist/slack-auth.js",
     "build": "npm run clean; npm run create-dist;  npm run copy-statics; npm run build-js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/taigaio/taiga-contrib-github-auth"
+    "url": "https://github.com/taigaio/taiga-contrib-slack-auth"
   },
   "keywords": [
-    "github",
+    "slack",
     "taiga",
     "authentication",
     "plugin"
   ],
-  "author": "Jesús Espino <jesus.espino@kaleidos.net>",
+  "author": "Jacobus Meulen <jacobus@openbusiness.com.sg>",
   "license": "AGPL",
   "bugs": {
-    "url": "https://github.com/taigaio/taiga-contrib-github-auth/issues"
+    "url": "https://slack.com/taigaio/taiga-contrib-slack-auth/issues"
   },
-  "homepage": "https://github.com/taigaio/taiga-contrib-github-auth",
+  "homepage": "https://slack.com/taigaio/taiga-contrib-slack-auth",
   "dependencies": {
     "coffee-script": "^1.8.0",
     "jade": "^1.9.1"

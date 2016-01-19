@@ -1,17 +1,17 @@
-AUTH_URL = "https://github.com/login/oauth/authorize"
+AUTH_URL = "https://slack.com/oauth/authorize"
 
-GithubLoginButtonDirective = ($window, $params, $location, $config, $events, $confirm,
+SlackLoginButtonDirective = ($window, $params, $location, $config, $events, $confirm,
                               $auth, $navUrls, $loader) ->
-    # Login or registar a user with his/her github account.
+    # Login or registar a user with his/her slack account.
     #
     # Example:
-    #     tg-github-login-button()
+    #     tg-slack-login-button()
     #
     # Requirements:
     #   - ...
 
     link = ($scope, $el, $attrs) ->
-        clientId = $config.get("gitHubClientId", null)
+        clientId = $config.get("slackClientId", null)
 
         loginOnSuccess = (response) ->
             if $params.next and $params.next != $navUrls.resolve("login")
@@ -36,24 +36,24 @@ GithubLoginButtonDirective = ($window, $params, $location, $config, $events, $co
                 $confirm.notify("light-error", response.data._error_message )
             else
                 $confirm.notify("light-error", "Our Oompa Loompas have not been able to get you
-                                                credentials from GitHub.")  #TODO: i18n
+                                                credentials from Slack.")  #TODO: i18n
 
-        loginWithGitHubAccount = ->
+        loginWithSlackAccount = ->
             type = $params.state
             code = $params.code
             token = $params.token
 
-            return if not (type == "github" and code)
+            return if not (type == "slack" and code)
             $loader.start(true)
 
             data = {code: code, token: token}
             $auth.login(data, type).then(loginOnSuccess, loginOnError)
 
-        loginWithGitHubAccount()
+        loginWithSlackAccount()
 
         $el.on "click", ".button-auth", (event) ->
             redirectToUri = $location.absUrl()
-            url = "#{AUTH_URL}?client_id=#{clientId}&redirect_uri=#{redirectToUri}&state=github&scope=user:email"
+            url = "#{AUTH_URL}?client_id=#{clientId}&redirect_uri=#{redirectToUri}&state=slack&scope=user:email"
             $window.location.href = url
 
         $scope.$on "$destroy", ->
@@ -65,7 +65,7 @@ GithubLoginButtonDirective = ($window, $params, $location, $config, $events, $co
         template: ""
     }
 
-module = angular.module('taigaContrib.githubAuth', [])
-module.directive("tgGithubLoginButton", ["$window", '$routeParams', "$tgLocation", "$tgConfig", "$tgEvents",
+module = angular.module('taigaContrib.slackAuth', [])
+module.directive("tgSlackLoginButton", ["$window", '$routeParams', "$tgLocation", "$tgConfig", "$tgEvents",
                                          "$tgConfirm", "$tgAuth", "$tgNavUrls", "tgLoader",
-                                         GithubLoginButtonDirective])
+                                         SlackLoginButtonDirective])

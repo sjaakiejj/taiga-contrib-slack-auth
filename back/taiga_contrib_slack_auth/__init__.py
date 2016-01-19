@@ -16,4 +16,4 @@
 
 __version__ = (1, 9, 1)
 
-default_app_config = "taiga_contrib_github_auth.apps.TaigaContribGithubAuthAppConfig"
+default_app_config = "taiga_contrib_slack_auth.apps.TaigaContribSlackAuthAppConfig"

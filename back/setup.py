@@ -5,14 +5,14 @@ import os
 from setuptools import setup, find_packages
 
 setup(
-    name = 'taiga-contrib-github-auth',
-    version = ":versiontools:taiga_contrib_github_auth:",
-    description = "The Taiga plugin for github authentication",
+    name = 'taiga-contrib-slack-auth',
+    version = ":versiontools:taiga_contrib_slack_auth:",
+    description = "The Taiga plugin for slack authentication",
     long_description = "",
-    keywords = 'taiga, github, auth, plugin',
-    author = 'Jesús Espino García',
-    author_email = 'jesus.espino@kaleidos.net',
-    url = 'https://github.com/taigaio/taiga-contrib-github-auth',
+    keywords = 'taiga, slack, auth, plugin',
+    author = 'Jacobus Meulen',
+    author_email = 'jacobus@openbusiness.com.sg',
+    url = 'https://github.com/sjaakiejj/taiga-contrib-slack-auth',
     license = 'AGPL',
     include_package_data = True,
     packages = find_packages(),
